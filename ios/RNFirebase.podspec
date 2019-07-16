@@ -14,13 +14,24 @@ Pod::Spec.new do |s|
   s.source              = { :git => "https://github.com/invertase/react-native-firebase.git", :tag => "v#{s.version}" }
   s.social_media_url    = 'http://twitter.com/invertaseio'
   s.platform            = :ios, "9.0"
-  s.source_files        = 'RNFirebase/**/*.{h,m}'
-  s.dependency          'React'
-  s.dependency          'Firebase/Core'
+
+  s.default_subspec     = 'Core'
+
+  s.subspec 'Core' do |cs|
+    cs.source_files        = 'RNFirebase/**/*.{h,m}'
+    cs.exclude_files       = 'RNFirebase/fabric/**/*.{h,m}'
+
+    cs.dependency          'React'
+    cs.dependency          'Firebase/Core'
+  end
+
   s.subspec 'Crashlytics' do |cs|
+    cs.source_files = 'RNFirebase/fabric/**/*.{h,m}'
+
     cs.dependency 'Fabric'
     cs.dependency 'Crashlytics'
   end
+
   # allow this package to be used with use_frameworks!
   s.static_framework = true
 end
